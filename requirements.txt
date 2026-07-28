@@ -1,0 +1,1 @@
+Run pip install -r requirements.txt, then playwright install — yes, both, Playwright needs its own personal browsers, apparently regular ones just weren't good enough.
