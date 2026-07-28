@@ -1,13 +1,10 @@
-## Known Limitations
-
-- **One-way only, single route.** Hardcoded to JNB → CPT. Round-trip support would mean handling a second calendar for the return date — a problem for future me.
-- **No error handling.** If a selector breaks, the whole script crashes instead of failing gracefully. Fine for a one-off scrape, not fine for anything running unattended.
-- **Fragile by nature.** This works because it depends on lift.co.za's exact HTML structure staying the same. If they redesign their date picker, this breaks. That's just the tax you pay for not having an API.
-
-## Lessons Learned (a.k.a. Things That Broke Me)
-
-- **The invisible overlay of doom.** Every click kept timing out with `<div id="overlay"> intercepts pointer events` — turns out it was a cookie consent banner sitting silently on top of the entire page. Nothing in the error message says "cookie banner," it just says "good luck." Fixed by clicking Accept before touching anything else.
-- **DevTools lies by omission.** Collapsed elements show as `⋯` in the inspector, which looks like there's nothing there. There's always something there. Had to manually expand elements more than once to find what I actually needed.
-- **Text ≠ text.** Tried matching a dropdown item by airport code (`JNB`) — except the dropdown displays full city names ("Johannesburg (OR Tambo)"), not codes. The element also wasn't even the one I was targeting; the clickable text lived in a nested `<div>`, not the `<li>` I was clicking on. Two separate wrong assumptions stacked on top of each other.
-- **Headless mode debugs nothing.** Running invisibly is great for speed, terrible for figuring out *why* something's failing. Switching to `headless=False` with `slow_mo` and taking screenshots mid-run was the only way to actually see what was blocking me.
-- **Silent failures are the worst failures.** At one point the script ran with zero output and zero errors — because it never actually called the function it defined. No crash, no clue, just silence.
+So this is my list of advantages and disadvantages…
+Known Limitations (Stuff I Didn't Have Time For)
+•	One route, one direction, no takebacks. It's hardcoded to JNB → CPT, one-way only. Round trips would mean fighting a second calendar for the return date, and honestly, I'd only just made peace with the first one.
+•	Zero error handling. If literally one selector on lift.co.za so much as sneezes, the whole script face-plants. Totally fine for "run it once and grab the data." Absolutely not fine for leaving it running unattended and trust me.
+•	Held together by vibes and CSS selectors. This whole thing works because it's precisely tuned to lift.co.za's current HTML. The moment their dev team redesigns the date picker, this scraper dies instantly and without warning. 
+Lessons Learned (Things That Broke Me)
+•	The invisible overlay of doom. Every single click timed out with some cryptic intercepts pointer events error. Turns out it was just a cookie banner, quietly sitting on top of the entire page like a bouncer nobody told me about. The error message doesn't say "hey, cookie popup." It just says "good luck." Clicking Accept first fixed everything.
+•	Developer had trust issues. Collapsed elements show up as ⋯, which looks a lot like "there's nothing here" and is, in fact, lying. There's always something in there. Learned to expand everything before assuming it was empty.
+•	Text ≠ text, apparently. I tried matching a dropdown item by the airport code "JNB." Cute idea. Didn't work because the dropdown shows full city names like "Johannesburg (OR Tambo)," not codes. Also, I was clicking the wrong element entirely the actual text was hiding in a nested <div>, not the <li> I thought I was targeting. Two wrong assumptions..
+•	Headless mode is a great way to debug nothing. Running invisibly is fast, sure, but it's also the equivalent of debugging with your eyes closed. Switching to headless=False with slow_mo was the only way to actually see what was blocking me instead of guessing.
