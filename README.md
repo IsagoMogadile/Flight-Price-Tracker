@@ -1,4 +1,4 @@
-## Known Limitations (Stuff I Didn't Have Time For)
+## Known Limitations (Stuff which stressed me)
  
 - **One route, one direction, no takebacks.** It's hardcoded to JNB → CPT, one-way only. Round trips would mean fighting a second calendar for the return date, and honestly, I'd only just made peace with the first one.
 - **Zero error handling.** If literally one selector on lift.co.za so much as sneezes, the whole script face-plants. Totally fine for "run it once and grab the data." Absolutely not fine for leaving it running unattended and trusting it not to fall over.
